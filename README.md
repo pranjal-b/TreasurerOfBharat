@@ -8,7 +8,8 @@ A Next.js 14 dashboard application built with TypeScript, featuring authenticati
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS 4
 - **UI:** Radix UI, Lucide icons, Framer Motion
-- **Auth:** NextAuth.js v5
+- **Auth:** NextAuth.js v5 (Credentials + optional Google/GitHub)
+- **Database:** Prisma + PostgreSQL (users stored in DB; password hashing via bcrypt)
 - **i18n:** next-intl (multi-locale support)
 - **State:** Jotai
 - **Forms:** React Hook Form + Zod
@@ -25,6 +26,17 @@ A Next.js 14 dashboard application built with TypeScript, featuring authenticati
 ```bash
 npm install
 ```
+
+### Database setup
+
+1. Copy `.env.example` to `.env` and set `DATABASE_URL` (PostgreSQL connection string).
+2. Run migrations to create the `User` table:
+
+```bash
+npx prisma migrate deploy
+```
+
+For local development you can use a hosted PostgreSQL (e.g. [Neon](https://neon.tech), [Supabase](https://supabase.com)) or a local Postgres instance.
 
 ### Development
 
@@ -57,7 +69,13 @@ npm run lint
 
 ## Environment
 
-Copy `.env.example` to `.env.local` and configure any required keys (e.g. NextAuth, APIs).
+Copy `.env.example` to `.env` and configure:
+
+- **DATABASE_URL** — PostgreSQL connection string (required for auth and registration).
+- **NEXTAUTH_SECRET** — Long random string for signing sessions (use `openssl rand -base64 32`).
+- **NEXTAUTH_URL** — App URL (e.g. `http://localhost:3000` in dev).
+
+Optional: OAuth provider env vars if you use Google/GitHub login.
 
 ## Deploy
 

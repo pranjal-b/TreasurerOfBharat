@@ -1,0 +1,198 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  REVIEWER
+  ADMIN
+}
+
+model User {
+  id                    String    @id @default(cuid())
+  email                 String    @unique
+  name                  String
+  passwordHash          String
+  image                 String?
+  emailVerified         DateTime?
+  role                  Role      @default(USER)
+  companyId             String?
+  onboardingCompletedAt DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  company        Company?         @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  treasuryProfile TreasuryProfile?
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  name      String
+  industry  String?
+  size      String?
+  country   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users User[]
+}
+
+model TreasuryProfile {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  userRole              String?  // Treasurer, Treasury Analyst, CFO, etc.
+  teamSize              String?
+  reportingStructure     String?
+  treasuryFunctions     Json?    // array of strings
+  tmsName               String?
+  bankConnectivityMethod String?
+  erpIntegration        String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TimelineItemType {
+  NEWS
+  REGULATORY
+  MARKET
+  TECHNOLOGY
+}
+
+model TimelineItem {
+  id        String           @id @default(cuid())
+  userId    String?          // null = global item for all users
+  title     String
+  source    String
+  summary   String
+  link      String?
+  type      TimelineItemType
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([type, createdAt])
+}
+
+enum ArticleStatus {
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+}
+
+model Article {
+  id          String        @id @default(cuid())
+  authorId    String
+  reviewerId  String?
+  title       String
+  abstract    String
+  body        String
+  tags        String[]
+  industry    String?
+  status      ArticleStatus @default(SUBMITTED)
+  submittedAt DateTime?
+  reviewedAt  DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  articleId String
+  reviewerId String
+  status    String
+  comment   String?
+  createdAt DateTime @default(now())
+}
+
+enum EventType {
+  CONFERENCE
+  WEBINAR
+  NETWORKING
+  TRAINING
+}
+
+model Event {
+  id                String    @id @default(cuid())
+  name              String
+  organizer         String
+  location          String
+  date              DateTime
+  description       String?
+  registrationLink  String?
+  type              EventType
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Award {
+  id                  String   @id @default(cuid())
+  name                String
+  eligibilityCriteria String?
+  categories          String?
+  applicationProcess  String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Job {
+  id                 String   @id @default(cuid())
+  posterId           String
+  title              String
+  company            String
+  location           String
+  experienceRequired String?
+  description        String?
+  applicationLink    String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+enum NotificationChannel {
+  WHATSAPP
+  EMAIL
+  IN_APP
+}
+
+enum NotificationType {
+  REGULATORY
+  NEWS
+  EVENT
+  ARTICLE
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String
+  channel  NotificationChannel
+  type     NotificationType
+  title    String
+  body     String?
+  readAt   DateTime?
+  createdAt DateTime           @default(now())
+}
+
+enum LinkedInPostStatus {
+  DRAFT
+  APPROVED
+  PUBLISHED
+}
+
+model LinkedInPost {
+  id             String             @id @default(cuid())
+  content        String
+  status         LinkedInPostStatus  @default(DRAFT)
+  sourceItemIds  Json?
+  createdAt      DateTime           @default(now())
+  publishedAt    DateTime?
+}

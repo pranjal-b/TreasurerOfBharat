@@ -124,6 +124,12 @@
     
   },
   "Menu": {
+    "treasury": "Treasury",
+    "timeline": "Timeline",
+    "knowledge": "Knowledge",
+    "events": "Events",
+    "jobs": "Jobs",
+    "admin": "Admin",
     "dashboard": "Dashboard",
     "analytics": "Analytics",
     "banking": "Banking",

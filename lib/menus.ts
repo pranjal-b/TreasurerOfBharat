@@ -34,6 +34,52 @@ export function getMenuList(pathname: string, t: any): Group[] {
 
   return [
     {
+      groupLabel: t("treasury"),
+      id: "treasury",
+      menus: [
+        {
+          id: "timeline",
+          href: "/timeline",
+          label: t("timeline"),
+          active: pathname.includes("/timeline"),
+          icon: "heroicons-outline:newspaper",
+          submenus: [],
+        },
+        {
+          id: "knowledge",
+          href: "/knowledge",
+          label: t("knowledge"),
+          active: pathname.includes("/knowledge"),
+          icon: "heroicons-outline:book-open",
+          submenus: [],
+        },
+        {
+          id: "events",
+          href: "/events",
+          label: t("events"),
+          active: pathname.includes("/events"),
+          icon: "heroicons-outline:calendar",
+          submenus: [],
+        },
+        {
+          id: "awards",
+          href: "/awards",
+          label: "Awards",
+          active: pathname.includes("/awards"),
+          icon: "heroicons-outline:trophy",
+          submenus: [],
+        },
+        {
+          id: "jobs",
+          href: "/jobs",
+          label: t("jobs"),
+          active: pathname.includes("/jobs"),
+          icon: "heroicons-outline:briefcase",
+          submenus: [],
+        },
+      ],
+    },
+    {
       groupLabel: t("dashboard"),
       id: "dashboard",
       menus: [
@@ -80,6 +126,20 @@ export function getMenuList(pathname: string, t: any): Group[] {
               children: [],
             },
           ],
+        },
+      ],
+    },
+    {
+      groupLabel: t("admin"),
+      id: "admin",
+      menus: [
+        {
+          id: "admin",
+          href: "/admin",
+          label: t("admin"),
+          active: pathname.includes("/admin"),
+          icon: "heroicons-outline:cog-6-tooth",
+          submenus: [],
         },
       ],
     },

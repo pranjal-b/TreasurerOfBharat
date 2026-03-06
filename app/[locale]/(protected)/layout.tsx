@@ -6,6 +6,8 @@ import ThemeCustomize from '@/components/partials/customizer'
 import DashCodeHeader from '@/components/partials/header'
 import { auth } from "@/lib/auth";
 import { redirect } from "@/components/navigation";
+import { OnboardingGuard } from "@/components/onboarding-guard";
+
 const layout = async ({ children }: { children: React.ReactNode }) => {
     const session = await auth();
 
@@ -18,13 +20,13 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
             <DashCodeHeader />
             <DashCodeSidebar />
             <LayoutContentProvider>
-                {children}
+                <OnboardingGuard>
+                    {children}
+                </OnboardingGuard>
             </LayoutContentProvider>
             <DashCodeFooter />
         </LayoutProvider>
-    )
-
-
+    );
 };
 
 export default layout;

@@ -123,6 +123,12 @@
     "todos": "مهام"
   },
   "Menu": {
+    "treasury": "الخزانة",
+    "timeline": "الجدول الزمني",
+    "knowledge": "المعرفة",
+    "events": "الفعاليات",
+    "jobs": "الوظائف",
+    "admin": "الإدارة",
     "dashboard": "لوحة التحكم",
     "analytics": "تحليلات",
     "banking": "بنكية",
