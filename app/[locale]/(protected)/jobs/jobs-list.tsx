@@ -50,7 +50,7 @@ export default function JobsList() {
               <p className="line-clamp-2 text-default-600">{j.description}</p>
             )}
             {j.applicationLink && (
-              <Button variant="link" className="mt-2 p-0" asChild>
+              <Button variant="ghost" className="mt-2 p-0 text-primary-500 hover:underline" asChild>
                 <a href={j.applicationLink} target="_blank" rel="noopener noreferrer">
                   Apply
                 </a>

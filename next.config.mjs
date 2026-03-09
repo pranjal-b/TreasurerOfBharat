@@ -10,6 +10,10 @@ const withNextra = nextra({
   themeConfig: "./theme.config.tsx",
 });
 const nextConfig = {
+  eslint: {
+    // Disable ESLint during builds to avoid CLI option incompatibility on Vercel
+    ignoreDuringBuilds: true,
+  },
   images: {
     remotePatterns: [
       {
