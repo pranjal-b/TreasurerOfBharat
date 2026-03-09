@@ -1,4 +1,4 @@
-import ArticleDetail from "../../article-detail";
+import ArticleDetail from "../article-detail";
 
 export default async function ArticlePage({
   params,
