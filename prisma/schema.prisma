@@ -196,3 +196,10 @@ model LinkedInPost {
   createdAt      DateTime           @default(now())
   publishedAt    DateTime?
 }
+
+model WaitlistEntry {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+    
